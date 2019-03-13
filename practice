@@ -1,0 +1,15 @@
+Question1:
+Write a program that accepts a sequence of whitespace separated words as input and prints the words after removing all duplicate words and sorting them alphanumerically.
+Suppose the following input is supplied to the program:
+hello world and practice makes perfect and hello world again
+Then, the output should be:
+again and hello makes perfect practice world
+
+s = input('请输入个英文语句')
+s = [x for x in s.split( ) if len(x) > 0]
+for i in s:
+    while s.count(i)>1:
+        s.remove(i)
+s.sort(reverse = False)
+s = ' '.join(s)
+print(s)
