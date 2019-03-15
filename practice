@@ -24,6 +24,7 @@ LETTERS 10
 DIGITS 3
 
 solution:
+s = input('请输入一个字符串')
 letterNum = 0
 digitNum  = 0
 for i in s:
