@@ -69,3 +69,26 @@ a, b = a[b] = {}, 5
 print(a)   # 打印个啥
 ```
 
+
+##类属性继承的变量问题
+class A:
+    x = 1
+class B(A):
+    pass
+class C(A):
+    pass
+
+B.x = 100
+print(A.x,B.x,C.x)
+print(id(A.x),id(B.x),id(C.x))
+
+A.x = 1000
+print(A.x,B.x,C.x)
+print(id(A.x),id(B.x),id(C.x))
+
+output:
+1 100 1
+1775004688 1775007856 1775004688
+1000 100 1000
+2267942203088 1775007856 2267942203088
+
