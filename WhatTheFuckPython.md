@@ -92,3 +92,15 @@ output:
 1000 100 1000
 2267942203088 1775007856 2267942203088
 
+
+###执行时机的问题
+list_2 = [1, 2, 3, 4]
+print(list(enumerate(list_2)))
+for idx, item in enumerate(list_2):
+    list_2.remove(item)
+    # print(list(enumerate(list_2)))
+print(list_2)
+
+#s输出为：
+[2,4]
+
