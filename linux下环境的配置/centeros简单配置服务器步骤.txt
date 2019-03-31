@@ -1,6 +1,6 @@
 1.配置nginx文件
 	1.1.进入 cd /etc/nginx/conf.d 目录
-	1.2.复制一份default.conf 生成自己需要生成的站点名称.conf结尾的文	    件， cp default.conf www.xxx.xxx.conf
+	1.2.复制一份/etc/nginx/下的default.conf 生成自己需要生成的站点名称.conf结尾的文	    件， cp default.conf www.xxx.xxx.conf
 	1.3、修改配置文件。
 	     server {
                   listen    80; # 监听的端口。
@@ -27,5 +27,10 @@
 	创建 index.html文件。写入 <meta charset = 'utf-8'>  任意内容。
 
 到此。nginx的配置则完成。如果配置的是本地服务器。则去本地hosts文件修改指向即可。
+
+遇到问题
+1在root用户下配置的页面文件在/root目录下，然后在另外的普通用户weini下通过浏览器访问的时候报错４０３ｆｏｒｂｉｄｅｎ
+内心是蒙蔽的。。。。，将ｒｏｏｔ文件夹的其他用户配置执行权限才能访问.
+2.conf文件中千万不要出现中文空格，缩进一定要对齐.
 
 			
