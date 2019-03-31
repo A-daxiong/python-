@@ -1,0 +1,42 @@
+1.打开nginx的配置文件。
+	1.1 sudo cd /etc/nginx/sites-available
+	1.2 复制default生成要建立的站点
+	    sudo cp default www.xxx.xxx
+	1.3 使用vim编辑器打开刚刚复制生成www.xxx.xxx文件
+	    sudo vim www.xxx.xxx
+	1.4 保留如下内容：
+	   server {
+	listen 80;   # 监听的端口
+
+
+	root /var/www/blog;  # 这里存放的HTML文件。访问的目录
+
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name www.blog.com blog.com;   # 这里是访问的域名
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+		}
+	}
+	1.5 进入nginx目录下的sites-enabled创建一个指向
+	    sites-available/www.xxx.xxx的软连接
+	    sudo cd ../sites-enabled
+	    sudo ln -s ../sites-available/www.xxx.xxx www.xxx.xxx
+	到此nginx的简单配置即完成，重启nginx 服务器
+	1.6 sudo service nginx restart
+2.进入cd /var/www 目录
+	2.1创建上面配置文件中提到的存放HTML的文件目录
+	sudo mkdir blog
+	2.2 cd blog
+	2.3 创建一个HTML文件
+	    sudo vim index.html
+	2.4 在文件中输入<meta chartset='utf-8'>
+			任意内容。
+
+
+配置就好了可以输入www.blog.com 即可访问。
+www.blog.com == www.xxx.xxx bolg.com要换成你要创建的域名或者目录！！！！
+	 

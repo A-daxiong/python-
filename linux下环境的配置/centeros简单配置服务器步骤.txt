@@ -1,0 +1,31 @@
+1.配置nginx文件
+	1.1.进入 cd /etc/nginx/conf.d 目录
+	1.2.复制一份default.conf 生成自己需要生成的站点名称.conf结尾的文	    件， cp default.conf www.xxx.xxx.conf
+	1.3、修改配置文件。
+	     server {
+                  listen    80; # 监听的端口。
+                  server_name www.ubuntu.foxfly.vip ubuntu.foxfly.vip;  # 你的配置的域名。
+ 
+   
+                   location / { 
+        		root   /data/www/ubuntu/jl;   # 你存放index.html文件的目录
+        		index  index.html index.htm;
+    			}
+
+    
+    		error_page   500 502 503 504  /50x.html;
+    		location = /50x.html {
+        		root   /usr/share/nginx/html;
+    			}
+ 		 }
+	1.4. 重启nginx服务器。 systemctl restart nginx.service
+2.创建访问目录，（也就是存放你index.html的目录）
+	2.1. 如果你配置的目录原来就有，cd 进入就行。没有则创建。记得在根目录下创建。
+	cd /  到根目录。
+	mkdir -p data/www/ubuntu/jl
+	cd 进入jl文件。
+	创建 index.html文件。写入 <meta charset = 'utf-8'>  任意内容。
+
+到此。nginx的配置则完成。如果配置的是本地服务器。则去本地hosts文件修改指向即可。
+
+			
