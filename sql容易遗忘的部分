@@ -1,0 +1,119 @@
+#删除表中的数据，自增主键的值不会重新开始
+delete from 表名 where 条件；#如果不加条件，会删除表中所有数据,慎重使用
+
+清空表，自增主键的值重新开始编号
+truncate 
+	   truncate table 表名,清空表中所有记录，等价于delete from 表名；
+	   delete和truncate差别，truncate后，表中自增主键值从1开始
+
+
+- 常用的数据库引擎：myisam、innodb、archive、ndb、memory 
+  - myisam和innodb的区别
+    - myisam查询速度快，不支持事务、不支持外键、支持表锁
+    - innodb增删改效率高，支持事务、支持外键，支持行锁
+
+
+ #修改字段类型
+     alter table 表名 modify 字段名 类型 [限制]
+  #增加字段
+     alter table 表名  add [column] 字段名 类型 [限制];
+  #删除字段
+     alter table 表名 drop [column] 字段名;
+  修改字段名和类型
+     alter table 表名 change [column] 旧字段名 新字段名 类型 [限制];
+     
+  #修改表名
+    alter table 表名 rename 新表名
+    alter table 表名 [engine=myisam] [default charset=utf8];
+
+  # 可以通过first、after指定插入位置
+    alter table student add sno varchar(3) not null after sid; //在sid列后插入
+     alter table student add sid int primary key auto_increment first;//在第一列插入
+
+
+### 2.1 事务
+
+- 事务把一组操作看做一个整体，要不都操作成功，要不都操作失败 。(ACID)
+- 表的数据库引擎必须是innodb，innodb支持事物，myisam不支持事务
+
+- 修改表引擎：alter table  表名 engine = innodb
+
+  ~~~~
+  查询是否为自动提交
+  select @@autocommit  (1为自动提交   0为手动提交)
+
+  关闭自动提交
+  set autocommit = 0
+
+  start transaction /begin
+
+  一组操作
+  commit/rollback
+
+  commit 提交 会把数据写到硬盘
+  rollback 回滚 撤销操作
+
+### 3.4 索引分类
+
+####  普通索引
+
+    create index 索引名 on 表名(字段 asc/desc) 默认asc升序
+
+####  唯一索引
+
+  在唯一索引所在列不能有重复值，增加和修改会受影响。
+
+~~~
+create  unique index 索引名 on 表名(字段 asc/desc) 默认asc升序
+~~~
+
+####  主键索引
+
+  创建表，主键索引会自动添加，要求在主键上不能有重复值，不能有空值
+
+#### 复合索引（联合索引） 索引了多个列
+
+- 使用联合索引，必须包含左前缀。  （a,b,c)
+  - a
+  - a,b
+  - a,b,c
+
+
+
+### 其它创建索引的方式
+
+ ~~~
+alter table 表 add index(字段1,字段2,...)
+alter table 表 add primary key(字段1,字段2,...)
+alter table 表 add unique(字段1,字段2,...)
+alter table 表 add fulltext(字段1,字段2,...)
+ ~~~
+
+### 3.5 不使用索引的情况
+
+- 查询时的联合索引没有左前缀，不使用索引
+- or条件里，如果一方字段没有索引，则不使用索引
+- 类型不对应的不会使用索引
+- like  '%tom' ,如果左边是通配符，不会使用索引
+- 使用!=、<>、not in操作，不使用索引
+
+
+
+## 五、视图
+
+有时候经常会遇到复杂的查询，写起来比较麻烦，这时候我们可以使用视图简化查询。视图就是固化的sql语句，可以不把视图当做基本表使用
+
+- 不要在视图上进行增、删、改
+
+~~~
+创建视图
+create view 视图名(字段列表) as 
+select子句
+
+删除视图
+drop view 视图名
+
+
+#########待整理部分外键和pymysql操作数据库
+
+
